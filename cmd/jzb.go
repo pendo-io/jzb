@@ -9,8 +9,9 @@ import (
 
 var (
 	rootCmd = &cobra.Command{
-		Use:   "jzb",
-		Short: "A tool for working with the jzb format",
+		Use:          "jzb",
+		Short:        "A tool for working with the jzb format",
+		SilenceUsage: true,
 	}
 	config = &cfg.CommandLineArguments{}
 )
@@ -20,7 +21,11 @@ func main() {
 		return app.Execute(*config)
 	}
 	rootCmd.PreRunE = func(cmd *cobra.Command, args []string) error {
-		return config.Validate()
+		if err := config.Validate(); err != nil {
+			_ = cmd.Help()
+			return err
+		}
+		return nil
 	}
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
