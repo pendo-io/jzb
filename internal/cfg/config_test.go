@@ -20,40 +20,40 @@ func TestCommandLineArguments_Validate(t *testing.T) {
 		{
 			name: "No error when create option is selected",
 			fields: fields{
-				InputPath: "-",
+				InputPath:  "-",
 				OutputPath: "",
-				Create: true,
-				Extract: false,
+				Create:     true,
+				Extract:    false,
 			},
 			wantErr: false,
 		},
 		{
 			name: "No error when extract option is selected",
 			fields: fields{
-				InputPath: "-",
+				InputPath:  "-",
 				OutputPath: "",
-				Create: false,
-				Extract: true,
+				Create:     false,
+				Extract:    true,
 			},
 			wantErr: false,
 		},
 		{
 			name: "error when both create and extract options are selected",
 			fields: fields{
-				InputPath: "-",
+				InputPath:  "-",
 				OutputPath: "",
-				Create: true,
-				Extract: true,
+				Create:     true,
+				Extract:    true,
 			},
 			wantErr: true,
 		},
 		{
 			name: "error when neither create and extract options are selected",
 			fields: fields{
-				InputPath: "-",
+				InputPath:  "-",
 				OutputPath: "",
-				Create: false,
-				Extract: false,
+				Create:     false,
+				Extract:    false,
 			},
 			wantErr: true,
 		},
@@ -80,7 +80,7 @@ func TestCommandLineArguments_Validate_File(t *testing.T) {
 	if _, err := os.Create("/tmp/test2.json"); err != nil {
 		t.Fatal("could not set up test")
 	}
-	defer func () {
+	defer func() {
 		_ = os.Remove("/tmp/testdir")
 		_ = os.Remove("/tmp/test2.json")
 	}()
@@ -99,30 +99,30 @@ func TestCommandLineArguments_Validate_File(t *testing.T) {
 		{
 			name: "error when input path is a directory",
 			fields: fields{
-				InputPath: "/tmp/testdir",
+				InputPath:  "/tmp/testdir",
 				OutputPath: "",
-				Create: true,
-				Extract: false,
+				Create:     true,
+				Extract:    false,
 			},
 			wantErr: true,
 		},
 		{
 			name: "input file does not exist",
 			fields: fields{
-				InputPath: "/tmp/test.json",
+				InputPath:  "/tmp/test.json",
 				OutputPath: "",
-				Create: true,
-				Extract: false,
+				Create:     true,
+				Extract:    false,
 			},
 			wantErr: true,
 		},
 		{
 			name: "output file already exists",
 			fields: fields{
-				InputPath: "_",
+				InputPath:  "_",
 				OutputPath: "/tmp/test2.json",
-				Create: false,
-				Extract: true,
+				Create:     false,
+				Extract:    true,
 			},
 			wantErr: true,
 		},
@@ -140,6 +140,5 @@ func TestCommandLineArguments_Validate_File(t *testing.T) {
 			}
 		})
 	}
-
 
 }

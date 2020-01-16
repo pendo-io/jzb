@@ -2,7 +2,7 @@ package jzb
 
 import (
 	"bytes"
-	"compress/gzip"
+	"compress/zlib"
 	"encoding/base64"
 	"errors"
 	"fmt"
@@ -18,10 +18,11 @@ type JzbBody struct {
 // if an error is encountered, io.Reader will be nil
 func (j JzbBody) ExtractJson() (io.Reader, error) {
 	var buf []byte
-	if _, err := base64.StdEncoding.Decode(buf, j.Input); err != nil {
+	var err error
+	if buf, err = base64.RawURLEncoding.DecodeString(string(j.Input)); err != nil {
 		return nil, errors.New(fmt.Sprintf("error decoding jzb: %s", err.Error()))
 	}
-	reader, err := gzip.NewReader(bytes.NewBuffer(buf))
+	reader, err := zlib.NewReader(bytes.NewBuffer(buf))
 	if err != nil {
 		return nil, err
 	}

@@ -23,6 +23,7 @@ func Execute(config cfg.CommandLineArguments) error {
 	} else if config.Extract {
 		return extract(config, bytes)
 	}
+	return nil
 }
 
 func create(config cfg.CommandLineArguments, input []byte) error {
@@ -64,4 +65,5 @@ func write(config cfg.CommandLineArguments, bytes []byte) error {
 	} else {
 		println(string(bytes))
 	}
+	return nil
 }

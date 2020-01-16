@@ -2,7 +2,7 @@ package jzb
 
 import (
 	"bytes"
-	"compress/gzip"
+	"compress/zlib"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -20,16 +20,15 @@ func (j JsonBody) CreateJZB() (io.Reader, error) {
 		return nil, errors.New("invalid json body")
 	}
 	var buf bytes.Buffer
-	gzipWriter := gzip.NewWriter(&buf)
-	if _, err := gzipWriter.Write(j.Input); err != nil {
+	zWriter := zlib.NewWriter(&buf)
+	if _, err := zWriter.Write(j.Input); err != nil {
 		return nil, err
 	}
-	if err := gzipWriter.Flush(); err != nil {
+	if err := zWriter.Flush(); err != nil {
 		return nil, err
 	}
-	_ = gzipWriter.Close()
-	var b64bytes []byte
-	base64.StdEncoding.Encode(b64bytes, buf.Bytes())
-	returnBuf := bytes.NewBuffer(b64bytes)
+	_ = zWriter.Close()
+	b64 := base64.RawURLEncoding.EncodeToString(buf.Bytes())
+	returnBuf := bytes.NewBuffer([]byte(b64))
 	return returnBuf, nil
 }
