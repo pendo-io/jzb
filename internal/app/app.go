@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"github.com/pendo-io/jzb/internal/cfg"
 	"github.com/pendo-io/jzb/pkg/jzb"
 	"io/ioutil"
@@ -63,7 +64,7 @@ func write(config cfg.CommandLineArguments, bytes []byte) error {
 			return err
 		}
 	} else {
-		println(string(bytes))
+		fmt.Println(string(bytes))
 	}
 	return nil
 }
