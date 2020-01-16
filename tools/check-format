@@ -1,0 +1,10 @@
+#!/bin/bash
+
+FMTFILES=$( find cmd internal -type f -name "*.go" -print0 | xargs --null -P8 -n32 gofmt -l )
+if [[ -n "$FMTFILES" ]]; then
+    echo "gofmt errors:"
+    echo "$FMTFILES"
+    exit 1
+else
+    echo "gofmt OK"
+fi
