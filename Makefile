@@ -6,6 +6,7 @@ PROJECT = github.com/pendo-io/jzb
 PWD := $(shell pwd)
 GUID := $(shell id -g)
 VERSION := $(shell git describe --tags)
+SHA := $(shell git rev-parse HEAD)
 
 .DEFAULT_GOAL := default
 
@@ -14,12 +15,12 @@ clean:
 		@rm -rf dist
 
 build-arch:
-		@echo "Building for darwin/386 version ${VERSION}"
+		@echo "Building for darwin/386 version ${VERSION}-${SHA}"
 		@mkdir -p dist/darwin
-		@GOOS=darwin GOARCH=386 go build -mod vendor -ldflags "-X ${PROJECT}/internal/version.Version=${VERSION}" -v -o dist/darwin/jzb cmd/jzb.go
+		@GOOS=darwin GOARCH=386 go build -mod vendor -ldflags "-X ${PROJECT}/internal/version.Version=${VERSION}-${SHA}" -v -o dist/darwin/jzb cmd/jzb.go
 		@echo "Building for linux/386 version ${VERSION}"
 		@mkdir -p dist/linux
-		@GOOS=linux GOARCH=386 go build -mod vendor -ldflags "-X ${PROJECT}/internal/version.Version=${VERSION}" -v -o dist/linux/jzb cmd/jzb.go
+		@GOOS=linux GOARCH=386 go build -mod vendor -ldflags "-X ${PROJECT}/internal/version.Version=${VERSION}-${SHA}" -v -o dist/linux/jzb cmd/jzb.go
 		@mkdir dist/linux/release dist/darwin/release
 		@chmod 775 -R dist/
 		@tar -c -f dist/linux/release/jzb-linux.tar dist/linux/jzb

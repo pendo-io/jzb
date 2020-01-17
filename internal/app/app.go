@@ -11,7 +11,7 @@ import (
 
 func Execute(config cfg.CommandLineArguments) error {
 	if config.Version {
-		fmt.Sprintln(version.Version)
+		fmt.Println(version.Version)
 		return nil
 	}
 	var bytes []byte
