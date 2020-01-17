@@ -3,12 +3,17 @@ package app
 import (
 	"fmt"
 	"github.com/pendo-io/jzb/internal/cfg"
+	"github.com/pendo-io/jzb/internal/version"
 	"github.com/pendo-io/jzb/pkg/jzb"
 	"io/ioutil"
 	"os"
 )
 
 func Execute(config cfg.CommandLineArguments) error {
+	if config.Version {
+		fmt.Sprintln(version.Version)
+		return nil
+	}
 	var bytes []byte
 	var err error
 	if config.InputPath != "-" {

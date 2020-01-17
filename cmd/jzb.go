@@ -37,4 +37,5 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&config.Extract, "extract", "x", false, "extract from a jzb")
 	rootCmd.PersistentFlags().StringVarP(&config.InputPath, "file", "f", "-", "(Optional) path to file/jzb.")
 	rootCmd.PersistentFlags().StringVarP(&config.OutputFile, "output", "o", "", "(Optional) output file path. (default stdout)")
+	rootCmd.PersistentFlags().BoolVarP(&config.Version, "version", "v", false, "display version")
 }

@@ -12,9 +12,13 @@ type CommandLineArguments struct {
 	OutputFile string
 	Create     bool
 	Extract    bool
+	Version    bool
 }
 
 func (c CommandLineArguments) Validate() error {
+	if c.Version {
+		return nil
+	}
 	builder := &strings.Builder{}
 	if (c.Create && c.Extract) || (!c.Create && !c.Extract) {
 		builder.WriteString("must choose one -c or -x\n")
